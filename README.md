@@ -52,6 +52,7 @@ LEUKOLION, modern web teknolojileri ve yapay zeka entegrasyonuyla geliştirilmi�
 ├── frontend/           # React + Vite Arayüz uygulaması
 │   ├── public/         # Statik varlıklar (Favicon, Manifest, Service Worker)
 │   └── src/            # Kaynak kodlar (Bileşenler, Sayfalar, Layouts, API modülü)
+├── mobile_client/      # Flutter Mobil Uygulama (Android / iOS / Desktop)
 └── docker-compose.yml  # PostgreSQL veritabanı konteyner yapılandırması
 ```
 
@@ -63,8 +64,8 @@ Projeyi kendi yerel bilgisayarınızda çalıştırmak için aşağıdaki adıml
 
 ### 1. Depoyu Klonlayın
 ```bash
-git clone https://github.com/sukru00dev/s-nav-g-zetim-sistemi.git
-cd s-nav-g-zetim-sistemi
+git clone https://github.com/sukru00dev/leukolion.git
+cd leukolion
 ```
 
 ### 2. Veritabanını Başlatın
