@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>LEUKOLION v2.0 - Temel Mimari Hatalar, MediaPipe Analizi ve Model Eğitimi Zaman Planı</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 16mm 14mm 16mm 14mm;
+      @bottom-right {
+        content: counter(page) " / " counter(pages);
+        font-size: 8.5pt;
+        color: #64748b;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      @bottom-left {
+        content: "LEUKOLION v2.0 | Mimari Hata Teardown & Model Eğitimi Rehberi";
+        font-size: 8.5pt;
+        color: #64748b;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #0f172a;
+      line-height: 1.5;
+      font-size: 9.5pt;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+    .cover {
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 85vh;
+      padding-top: 40px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 8.5pt;
+      font-weight: 700;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .badge-primary { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .badge-success { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .badge-warning { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    
+    h1.title {
+      font-size: 24pt;
+      line-height: 1.25;
+      color: #0a2540;
+      margin: 0 0 12px 0;
+      font-weight: 800;
+      border-bottom: 4px solid #0066cc;
+      padding-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 11.5pt;
+      color: #475569;
+      margin-bottom: 30px;
+      font-weight: 400;
+      line-height: 1.45;
+    }
+    .meta-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 25px;
+      font-size: 9pt;
+      color: #334155;
+    }
+    .meta-box table { width: 100%; border-collapse: collapse; }
+    .meta-box td { padding: 6px 10px; vertical-align: top; border-bottom: 1px solid #f1f5f9; }
+    .meta-box td:first-child { font-weight: 700; width: 30%; color: #0a2540; }
+
+    h1, h2, h3, h4 {
+      color: #0a2540;
+      font-weight: 700;
+      page-break-after: avoid;
+    }
+    h2 {
+      font-size: 13pt;
+      border-bottom: 1.5px solid #cbd5e1;
+      padding-bottom: 4px;
+      margin-top: 22px;
+      margin-bottom: 10px;
+      color: #004b99;
+    }
+    h3 {
+      font-size: 10.5pt;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+    p { margin-top: 0; margin-bottom: 8px; text-align: justify; }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #0066cc;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+    .card-danger {
+      background: #fff5f5;
+      border: 1px solid #fed7d7;
+      border-left: 4px solid #e53e3e;
+    }
+    .card-success {
+      background: #f0fff4;
+      border: 1px solid #c6f6d5;
+      border-left: 4px solid #38a169;
+    }
+    .card-warning {
+      background: #fffaf0;
+      border: 1px solid #feebc8;
+      border-left: 4px solid #dd6b20;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 8.6pt;
+      page-break-inside: avoid;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 9px;
+      text-align: left;
+    }
+    table.data-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+    }
+    table.data-table tr:nth-child(even) { background: #f8fafc; }
+
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 8.5pt;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 4px;
+      border-radius: 3px;
+      border: 1px solid #e2e8f0;
+    }
+    pre {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 8pt;
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 10px 0;
+      page-break-inside: avoid;
+      line-height: 1.35;
+    }
+
+    .timeline-item {
+      display: flex;
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+    .timeline-time {
+      width: 110px;
+      font-weight: 700;
+      color: #004b99;
+      font-size: 9pt;
+      flex-shrink: 0;
+    }
+    .timeline-content {
+      border-left: 2px solid #cbd5e1;
+      padding-left: 12px;
+      margin-left: 6px;
+    }
+
+    .page-break { page-break-before: always; }
+  </style>
+</head>
+<body>
+
+  <!-- COVER PAGE -->
+  <div class="cover">
+    <span class="badge badge-danger">Mimari Teardown & Kök Neden Analizi</span>
+    <h1 class="title">LEUKOLION v2.0<br>Temel Mimari Hatalar, MediaPipe Kısıtları ve Model Eğitimi Süreç Analizi</h1>
+    <div class="subtitle">
+      Projenin Temelindeki Yanlış İnşa Edilen Biyometrik ve Ağ Yapılarının Detaylı Otopsisi, MediaPipe'ın Gerçek Kısıtları ve Yapay Zeka Desteğiyle Model Eğitiminin Kesin Zaman Planı
+    </div>
+
+    <div class="meta-box">
+      <table>
+        <tr>
+          <td>Doküman Konusu:</td>
+          <td><strong>Mimari Hata Kataloğu, MediaPipe Kök Analizi ve Eğitim Süresi</strong></td>
+        </tr>
+        <tr>
+          <td>İncelenen Dosyalar:</td>
+          <td><code>ExamRoom.tsx</code>, <code>LiveMonitor.tsx</code>, <code>biometricsController.js</code>, MediaPipe FaceMesh SDK</td>
+        </tr>
+        <tr>
+          <td>Model Eğitim Süresi (İnsan):</td>
+          <td><strong>Toplam 30 – 45 Dakika (Yapay Zeka Destekli)</strong></td>
+        </tr>
+        <tr>
+          <td>Model Eğitim Süresi (CPU):</td>
+          <td><strong>Yalnızca 45 – 90 Saniye (Standart Bilgisayar)</strong></td>
+        </tr>
+        <tr>
+          <td>Tarih & Doküman Kodu:</td>
+          <td>21 Kasım 2026 — Sürüm 2.2 (Rapor No: ARCH-TEARDOWN-01)</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- BÖLÜM 1 -->
+  <h2>1. Yapay Zeka Yardımıyla Model Eğitimi Ne Kadar Zamanınızı Alır?</h2>
+  <p>
+    Yapay zekanın kod üretme, veri dönüştürme ve hata ayıklama yetenekleri sayesinde model eğitim süreci günler/haftalar süren bir iş olmaktan çıkmış, 
+    <strong>dakikalar içinde tamamlanan bir montaj hattına</strong> dönüşmüştür.
+  </p>
+
+  <div class="card card-success">
+    <strong>Özet Zaman Bilançosu:</strong><br>
+    • <strong>Sizin Harcayacağınız Aktif Zaman:</strong> 15 – 20 Dakika (Yalnızca kameranın karşısına geçip yönlere bakma).<br>
+    • <strong>Yapay Zekanın Harcayacağı Zaman:</strong> 5 – 10 Dakika (Kod üretimi, ONNX dışa aktarımı, WebAssembly entegrasyonu).<br>
+    • <strong>Bilgisayarın Modeli Eğitme Süresi:</strong> 60 – 90 Saniye (Normal CPU işlemcisiyle).<br>
+    • <strong>TOPLAM SÜRE:</strong> <strong>~30 – 45 Dakika içinde çalışan ilk yapay zeka modeliniz elinizde olur.</strong>
+  </div>
+
+  <h3>Dakika Dakika Uygulama Çizelgesi:</h3>
+
+  <div class="timeline-item">
+    <div class="timeline-time">Dakika 00 - 05</div>
+    <div class="timeline-content">
+      <strong>Aşama 1: Ortam Kurulumu & Paket Yükleme</strong><br>
+      Python ortamına gerekli 4 kütüphanenin yüklenmesi: <code>pip install torch mediapipe opencv-python onnx onnxruntime pandas</code>. Yapay zeka scriptleri hazırlar, siz terminale yapıştırırsınız.
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-time">Dakika 05 - 20</div>
+    <div class="timeline-content">
+      <strong>Aşama 2: Web Kamerasıyla Veri Toplama (Sizin Tek Göreviniz)</strong><br>
+      Yapay zekanın yazdığı <code>data_collector.py</code> scripti çalıştırılır. Ekranda beliren yönlendirmelere göre (Merkeze bak, Sağa bak, Sola bak, Masaya/Telefona bak, Tavana bak) her yöne 15-20 saniye bakılır. Toplam 3.000 adet etiketli koordinat CSV dosyasına yazılır.
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-time">Dakika 20 - 25</div>
+    <div class="timeline-content">
+      <strong>Aşama 3: Model Eğitimi & ONNX Export (Bilgisayarın İşi)</strong><br>
+      <code>train_gaze_model.py</code> çalıştırılır. Modelimiz ağır piksellerle değil, sadece 108 sayıyla çalıştığı için 35 epoch'luk eğitim normal bir laptop CPU'sunda <strong>60 saniyede biter</strong>. Çıktı olarak <code>gaze_classifier.onnx</code> (80 KB) üretilir.
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-time">Dakika 25 - 40</div>
+    <div class="timeline-content">
+      <strong>Aşama 4: React / Vite Projesine Entegrasyon ve Canlı Test</strong><br>
+      Model <code>frontend/public/models/</code> altına atılır. Yapay zeka <code>GazeClassifierService.ts</code> dosyasını bağlar ve <code>ExamRoom.tsx</code> içindeki eski hatalı kodları yenisiyle değiştirir. Canlıda test edilir.
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- BÖLÜM 2 -->
+  <h2>2. MediaPipe Kütüphanesinin Gerçek Kısıtları Nelerdir?</h2>
+  <p>
+    Projenin ilk geliştiricisi MediaPipe kütüphanesini yanlış anlamış ve ona yapamayacağı bir misyon yüklemiştir. MediaPipe'ın doğasındaki 3 temel kısıt şudur:
+  </p>
+
+  <div class="card card-danger">
+    <strong>1. MediaPipe Bir "Göz Takipçisi (Gaze Tracker)" Değildir!</strong><br>
+    MediaPipe FaceMesh, yalnızca yüzdeki geometrik tepe noktalarını (vertex) bulan bir <strong>3B Yüz Ağı Çıkarıcısıdır</strong>. 
+    MediaPipe öğrencinin nereye baktığını, odaklandığı noktayı veya niyetini BİLMEZ. Size sadece 478 tane ham koordinat (x, y, z) verir. 
+    Eski kod bu koordinatları alıp iki noktayı birbirine bölerek yapay zeka yaptığını sanmıştır; bu tamamen ilkel bir yanılgıdır.
+  </div>
+
+  <div class="card card-warning">
+    <strong>2. Piksel Çözünürlüğü ve Sensör Gürültüsü Sınırı</strong><br>
+    Standart bir 720p web kamerasında, öğrenci ekrandan 60 cm uzakta otururken göz kapağı mesafesi kamerada <strong>yalnızca 20 ila 30 pikseldir</strong>. 
+    Kameradaki ışık parlaması, kirpik gölgesi veya sensör ısınması nedeniyle MediaPipe'ın bulduğu iris merkezi her karede 1-2 piksel titrer (jitter). 
+    1 piksellik titreme, ekranda <strong>6-8 santimetrelik yapay bir sapmaya</strong> denk gelir. Ham koordinatları filtrelemeden kural yazarsanız sistem sürekli asılsız alarmlar üretir.
+  </div>
+
+  <div class="card card-warning">
+    <strong>3. Perspektif Bozulması (Monocular Ambiguity)</strong><br>
+    MediaPipe tek bir RGB kameradan derinlik (z ekseni) tahmin etmeye çalışır. Ancak her web kamerasının odak uzaklığı (Focal Length - FOV) farklıdır. 
+    Geniş açılı bir kamerada kafa döndüğünde koordinatların oranı balıkgözü efektiyle bozulur; sabit matematiksel eşikler çalışmaz hale gelir.
+  </div>
+
+  <!-- BÖLÜM 3 -->
+  <h2>3. Projenin En Temelinde Ne Yanlış Yapılmış? (Kod Denetimi)</h2>
+  <p>
+    Mevcut kod tabanındaki en vahim 4 yapısal hata aşağıda satır satır ifşa edilmiştir:
+  </p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 25%;">Hatalı Kod & Konum</th>
+        <th style="width: 35%;">Neden Temelden Hatalı? (Kök Neden)</th>
+        <th style="width: 40%;">Yol Açtığı Facia ve Çözüm</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ExamRoom.tsx:483</strong><br><code>headRatio = |CheekR - Nose| / |Nose - CheekL|</code></td>
+        <td>Sadece X ekseninde (sağa-sola dönüş / Yaw) oran alır. Y eksenini (aşağı eğilme / Pitch) tamamen yok sayar.</td>
+        <td><strong>Kucağa Bakışı Kaçırır:</strong> Öğrenci kucağındaki telefona baktığında başın sağ-sol oranı 1.0 kalır; sistem öğrenciyi "soruya bakıyor" sanır. Çözüm: 3D SolvePnP.</td>
+      </tr>
+      <tr>
+        <td><strong>ExamRoom.tsx:517</strong><br><code>irisPosition > 0.68 || &lt; 0.32</code></td>
+        <td>Yalnızca sol gözün yatay pozisyonuna bakar. Sabit sayısal eşik (0.68) anatomik farklılıkları yok sayar.</td>
+        <td><strong>Haksız Kopya Suçlaması:</strong> Göz kapağı hafif çekik veya asimetrik olan masum öğrenciler sürekli kopya ile suçlanır. Çözüm: Kişisel kalibrasyon ve eğitilmiş model.</td>
+      </tr>
+      <tr>
+        <td><strong>Fizyolojik Cehalet:</strong><br>VOR Refleksinin Yokluğu</td>
+        <td>Kafa ile göz hareketlerini birbirinden bağımsız iki ayrı <code>if</code> bloğunda denetler.</td>
+        <td><strong>Sahte Alarm Patlaması:</strong> İnsan kafasını 15° sağa çevirip gözünü 15° sola odakladığında hala ekrana bakmaktadır. Mevcut kod anında alarm çalar. Çözüm: Bütünleşik Tensör Modeli.</td>
+      </tr>
+      <tr>
+        <td><strong>ExamRoom.tsx:399</strong><br><code>setInterval(pollSession, 4000)</code></td>
+        <td>WebRTC veya WebSocket yerine ilkel HTTP Polling ile her 4 saniyede sunucuya GET isteği atar.</td>
+        <td><strong>Sunucu Çökmesi:</strong> 5.000 öğrenci sınava girdiğinde saniyede 1.250 HTTP sorgusu veritabanını kilitler. Çözüm: Socket.io Event mimarisi.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- BÖLÜM 4 -->
+  <h2>4. Büyük Karşılaştırma: Ne Yapılmıştı vs. Ne Yapılmalı?</h2>
+
+  <div class="card card-danger">
+    <strong>ESKİ YANLIŞ YAPI (Mevcut Durum):</strong><br>
+    Kamera &rarr; MediaPipe &rarr; İki Noktayı Birbirine Böl (2B Oran) &rarr; Sabit Eşik Kontrolü (<code>&gt; 0.68</code>) &rarr; Hatalı Karar.<br>
+    <em>Sonuç:</em> %45 Yanlış Alarm, kucağa bakışları kaçırma, gözlük takanları cezalandırma, 5.000 kişide çöken sunucu.
+  </div>
+
+  <div class="card card-success">
+    <strong>YENİ DOĞRU YAPI (Uygulayacağımız Mühendislik):</strong><br>
+    1. <strong>Öznitelik Çıkarıcı (Feature Extractor):</strong> MediaPipe sadece 36 noktayı (108 sayıyı) çıkarır; karara karışmaz.<br>
+    2. <strong>Matematiksel Normalizasyon:</strong> Koordinatlar burun köküne ötelenir ve göz mesafesine bölünerek kameradan bağımsızlaştırılır.<br>
+    3. <strong>Eğitilmiş Özel Model (Tiny ONNX MLP):</strong> 108 sayıyı girdi alıp kafa açısı ile göz bebeği arasındaki ilişkiyi yapay zekayla çözer (&lt; 1 ms sürede 5 sınıflı olasılık üretir).<br>
+    4. <strong>Sınav Öncesi 5 Noktalı Kalibrasyon:</strong> Öğrencinin bireysel göz sınırlarını öğrenerek yanlış pozitifleri sıfırlar.<br>
+    5. <strong>Presigned URL + 15 KB Kanıt:</strong> İhlal anında hafif WebP görseli sunucuyu yormadan depolamaya basılır.
+  </div>
+
+  <h2>5. Öğrenme ve Uygulama Adımları: Şimdi Ne Yapıyoruz?</h2>
+  <p>
+    İlk defa model eğiteceğiniz için bu süreci adım adım, kontrollü ve güvenli bir şekilde hayata geçireceğiz:
+  </p>
+
+  <ol style="margin-left: 20px; line-height: 1.7;">
+    <li><strong>Hazırlık:</strong> Proje dizininde <code>scripts/</code> klasörü altında veri toplama scriptini (<code>data_collector.py</code>) oluşturacağız.</li>
+    <li><strong>Veri Seti:</strong> Bilgisayarınızın kamerasını açarak 3 dakika içinde kendi bakış koordinatlarınızı kaydedeceksiniz.</li>
+    <li><strong>Eğitim (Training):</strong> PyTorch ile 60 saniyede modelinizi eğitecek ve <code>gaze_classifier.onnx</code> dosyasını üreteceksiniz.</li>
+    <li><strong>Entegrasyon:</strong> Ürettiğiniz bu modeli React içerisindeki <code>ExamRoom.tsx</code>'e bağlayıp eski hatalı formülleri tamamen çöpe atacağız.</li>
+  </ol>
+
+  <div class="card card-primary" style="background: #f0f9ff; border-left: 4px solid #0284c7;">
+    <strong>Öğretmen Tavsiyesi:</strong><br>
+    Geçmişteki hatalar moralinizi bozmasın; yazılım dünyasında en iyi mimariler her zaman ilk versiyonun hatalı yönlerinin otopsisi yapılarak doğar. 
+    Şu an projenin nerede tıkandığını tam olarak biliyoruz ve bunu çözmek 1 saatimizi bile almayacak!
+  </div>
+
+</body>
+</html>

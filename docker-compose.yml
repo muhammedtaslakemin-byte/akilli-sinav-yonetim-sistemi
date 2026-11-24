@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15-alpine
@@ -9,10 +7,61 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: leukolion
     ports:
-      - "127.0.0.1:5432:5432"
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d leukolion"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
+    networks:
+      - leukolion_net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: leukolion_backend
+    environment:
+      - PORT=5001
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/leukolion?schema=public
+      - JWT_SECRET=super_secret_key_leukolion_2026
+      - BYPASS_MERNIS=true
+      - CORS_ORIGIN=http://localhost:5173,http://localhost:3000,http://localhost:5001,http://127.0.0.1:5173,http://localhost:80
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_SECURE=false
+      - SMTP_USER=${SMTP_USER:-harran.info@gmail.com}
+      - SMTP_PASS=${SMTP_PASS:-edgqisqrirmvenbf}
+    ports:
+      - "5001:5001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - leukolion_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: leukolion_frontend
+    environment:
+      - VITE_PROXY_TARGET=http://backend:5001
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - leukolion_net
 
 volumes:
   pgdata:
+
+networks:
+  leukolion_net:
+    driver: bridge

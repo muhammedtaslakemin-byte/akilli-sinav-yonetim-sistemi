@@ -9,7 +9,7 @@ const loginLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 50,
   keyGenerator: (req) => `${req.ip}_${req.body?.email || ''}`,
-  validate: { keygenerator: false },
+  validate: false,
   message: { message: "Çok fazla giriş denemesi yaptınız. Lütfen 10 dakika sonra tekrar deneyin." }
 });
 
@@ -18,7 +18,7 @@ const verifyCodeLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 15,
   keyGenerator: (req) => `${req.ip}_${req.body?.email || req.query?.token || ''}`,
-  validate: { keygenerator: false },
+  validate: false,
   message: { message: "Çok fazla kod doğrulama denemesi yaptınız. Lütfen 10 dakika sonra tekrar deneyin." }
 });
 
