@@ -1,6 +1,7 @@
-# 🦁 LEUKOLION v2.0 - Yapay Zeka Destekli Uzaktan Sınav ve Gözetim Sistemi
+# 🎓 Akıllı Sınav Yönetim Sistemi (v2.0)
+### Yapay Zeka Destekli Uzaktan Sınav ve Biyometrik Gözetim Platformu
 
-LEUKOLION, modern web teknolojileri ve yapay zeka entegrasyonuyla geliştirilmiş, uzaktan eğitim süreçlerinde sınav güvenliğini ve gözetimini en üst seviyeye çıkarmayı hedefleyen kapsamlı bir **Çevrimiçi Sınav ve Gözetim Platformudur**. Bu proje, TÜBİTAK destekli bir altyapı ile Harran Üniversitesi Sınav Merkezi için özel olarak uyarlanmıştır.
+**Akıllı Sınav Yönetim Sistemi (LEUKOLION v2.0)**, modern web teknolojileri ve yapay zeka entegrasyonuyla geliştirilmiş, uzaktan eğitim süreçlerinde sınav güvenliğini ve gözetimini en üst seviyeye çıkarmayı hedefleyen kapsamlı bir **Çevrimiçi Sınav ve Biyometrik Gözetim Platformudur**. Bu proje, TÜBİTAK destekli bir altyapı ile Harran Üniversitesi Sınav Merkezi için özel olarak uyarlanmıştır.
 
 ---
 
@@ -64,8 +65,8 @@ Projeyi kendi yerel bilgisayarınızda çalıştırmak için aşağıdaki adıml
 
 ### 1. Depoyu Klonlayın
 ```bash
-git clone https://github.com/sukru00dev/leukolion.git
-cd leukolion
+git clone https://github.com/muhammedtaslakemin-byte/akilli-sinav-yonetim-sistemi.git
+cd akilli-sinav-yonetim-sistemi
 ```
 
 ### 2. Veritabanını Başlatın

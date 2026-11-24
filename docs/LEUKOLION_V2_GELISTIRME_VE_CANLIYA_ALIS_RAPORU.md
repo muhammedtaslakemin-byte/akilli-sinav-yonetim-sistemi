@@ -1,7 +1,7 @@
-# 🦁 LEUKOLION v2.0 - Kapsamlı Mimari, Model Eğitimi ve Canlıya Alış Raporu
+# 🎓 Akıllı Sınav Yönetim Sistemi (v2.0) - Kapsamlı Mimari, Model Eğitimi ve Canlıya Alış Raporu
 
-**Proje:** LEUKOLION v2.0 (Yapay Zeka Destekli Uzaktan Sınav ve Gözetim Platformu)  
-**GitHub Deposu:** [muhammedtaslakemin-byte/leukolion](https://github.com/muhammedtaslakemin-byte/leukolion)  
+**Proje:** Akıllı Sınav Yönetim Sistemi (Yapay Zeka Destekli Uzaktan Sınav ve Biyometrik Gözetim Platformu)  
+**GitHub Deposu:** [muhammedtaslakemin-byte/akilli-sinav-yonetim-sistemi](https://github.com/muhammedtaslakemin-byte/akilli-sinav-yonetim-sistemi)  
 **Orijinal Kaynak:** [sukru00dev/leukolion](https://github.com/sukru00dev/leukolion)  
 **Tarih:** 24 Kasım 2026  
 **Durum:** GitHub'a Başarıyla Eklendi & v2.0 Dönüşüm Yol Haritası Hazırlandı
@@ -11,7 +11,7 @@
 ## 📌 Yönetici Özeti & Yapılan İşlemler
 
 Kullanıcı talebi doğrultusunda şu kritik adımlar tamamlanmıştır:
-1. **GitHub Senkronizasyonu:** `leukolion` projesinin kaynak kodları, Docker yapılandırması ve dokümantasyon dosyaları GitHub üzerinde [muhammedtaslakemin-byte/leukolion](https://github.com/muhammedtaslakemin-byte/leukolion) olarak yeni ve herkese açık bir depoya aktarıldı.
+1. **GitHub Senkronizasyonu & İsim Güncellemesi:** Proje adı **Akıllı Sınav Yönetim Sistemi** olarak güncellendi ve kaynak kodları, Docker yapılandırması ve dokümantasyon dosyaları GitHub üzerinde [muhammedtaslakemin-byte/akilli-sinav-yonetim-sistemi](https://github.com/muhammedtaslakemin-byte/akilli-sinav-yonetim-sistemi) olarak depoya aktarıldı.
 2. **Çoklu Ortam ve Hesap Uyumlu Yapı:** Farklı bir bilgisayarda ve farklı bir hesapta geliştirme yapılıp daha sonra tek komutla canlı ortama alınabilmesi için Git remotes (`origin` ve `upstream`), Docker ortam değişkenleri ve branch stratejisi hazırlandı.
 3. **v2.0 Beklenti Raporu:** 
    - **ONNX (OXNN) Modeli:** MediaPipe üzerine inşa edilen hafif (~80 KB), tarayıcıda çalışan ve VOR (kafa-göz uyumu) refleksini çözen yapay zeka modelinin fine-tuning ve eğitim mimarisi detaylandırıldı.
@@ -42,8 +42,8 @@ flowchart LR
 ### Diğer Bilgisayarda Projeyi Başlatma (Adım Adım):
 ```bash
 # 1. Projeyi klonlayın
-git clone https://github.com/muhammedtaslakemin-byte/leukolion.git
-cd leukolion
+git clone https://github.com/muhammedtaslakemin-byte/akilli-sinav-yonetim-sistemi.git
+cd akilli-sinav-yonetim-sistemi
 
 # 2. Yeni özellik dalı açın
 git checkout -b feature/v2.0-onnx-pipeline

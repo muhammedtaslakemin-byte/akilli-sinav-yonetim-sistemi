@@ -1,7 +1,7 @@
 {
-  "short_name": "LEUKOLION",
-  "name": "Harran Üniversitesi Sınav Yönetim Sistemi",
-  "description": "Yapay Zeka Destekli Uzaktan Sınav ve Gözetim Sistemi",
+  "short_name": "Akıllı Sınav",
+  "name": "Akıllı Sınav Yönetim Sistemi",
+  "description": "Yapay Zeka Destekli Akıllı Uzaktan Sınav ve Biyometrik Gözetim Sistemi",
   "icons": [
     {
       "src": "/favicon.png",
